@@ -1,0 +1,156 @@
+#!/usr/bin/env ruby
+
+OLD_VERSIONS = [
+]
+
+require File.expand_path('../boot', __FILE__)
+
+genesis_time = Time.at(1434279999)
+
+seed_start_time = genesis_time + 60
+start_time = seed_start_time + 24 * 60 * 60
+start_time_shift = (start_time - Time.now).to_i
+
+puts "Starting seed"
+seed = CoinContainer.new(
+  image: 'bcexchange/seed',
+  bind_code: true,
+  args: {
+    timetravel: start_time_shift,
+    splitshareoutputs: 10,
+  },
+)
+seed.wait_for_boot
+
+node_names = %w( a b c d e )
+puts "Starting #{node_names.size} nodes: #{node_names.inspect}"
+nodes = []
+node_names.each do |name|
+  node = CoinContainer.new(
+    image: 'bcexchange/node',
+    bind_code: true,
+    links: [seed] + nodes,
+    args: {
+      timetravel: start_time_shift,
+    },
+  )
+  nodes << node
+end
+
+old_versions = {}
+old_nodes = []
+OLD_VERSIONS.each do |version|
+  puts "Starting node with old version #{version}"
+  node = CoinContainer.new(
+    image: "bcexchange/#{version}",
+    bind_code: false,
+    links: [seed] + nodes + old_nodes,
+    args: {
+      timetravel: start_time_shift,
+    },
+  )
+  old_versions[node] = version
+  old_nodes << node
+end
+
+puts "Starting empty node"
+empty_node = CoinContainer.new(
+  image: 'bcexchange/node',
+  bind_code: true,
+  links: [seed.name],
+  delete_at_exit: true,
+  remove_wallet_after_shutdown: true,
+  args: {
+    timetravel: start_time_shift,
+  },
+)
+
+all = [seed] + nodes + old_nodes + [empty_node]
+
+amount = 2_500
+amount_string = amount.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+
+recipient_nodes = (nodes + old_nodes)
+
+recipient_nodes.each_with_index do |node, i|
+  node.wait_for_boot
+
+  address = node.rpc("getaccountaddress", "")
+
+  puts "Sending #{amount_string} to node #{node_names[i]}"
+  seed.rpc("sendtoaddress", address, amount)
+end
+
+puts "Waiting for confirmations"
+loop do
+  all.each { |n| n.rpc("timetravel", 60) }
+  seed.generate_stake
+  balances = recipient_nodes.map { |n| n.rpc("getbalance") }
+  puts "Balances: #{balances.inspect}"
+  if balances.all? { |b| b == amount }
+    break
+  end
+end
+
+
+nModifierInterval=3
+count = 64
+puts "Building next #{count} blocks at nModifierInterval intervals (#{nModifierInterval} seconds)"
+count.times do |i|
+  all.each { |n| n.rpc("timetravel", nModifierInterval) }
+  seed.generate_stake
+  print "\r%2d/%2d" % [i+1, count]
+  STDOUT.flush
+end
+puts
+
+puts "Building 10 more blocks at 1 day interval to lower the difficulty"
+10.times do |i|
+  all.each { |n| n.rpc("timetravel", 24 * 60 * 60) }
+  seed.generate_stake
+  print "\r%2d/%2d" % [i+1, 10]
+  STDOUT.flush
+end
+puts
+
+seed_height = seed.block_count
+
+puts "Waiting for all nodes to sync at seed height (#{seed_height})"
+loop do
+  heights = all.map(&:block_count)
+  p heights
+  break if heights.all? { |h| h == seed_height }
+  sleep 1
+end
+
+last_block_time = seed.top_block["time"]
+puts "Last block time: #{last_block_time}"
+
+puts "Shutting down seed"
+seed.shutdown
+
+nodes.each_with_index do |node, i|
+  name = node_names[i]
+  image_name = "bcenet/#{name}"
+  puts "Creating image #{image_name}"
+  node.shutdown
+  node.wait_for_shutdown
+  node.commit(image_name)
+end
+
+old_nodes.each do |node|
+  name = old_versions[node]
+  image_name = "bcenet/#{name}"
+  puts "Creating image #{image_name}"
+  node.shutdown
+  node.wait_for_shutdown
+  node.commit(image_name)
+end
+
+node = empty_node
+name = "empty"
+image_name = "bcenet/#{name}"
+puts "Creating image #{image_name}"
+node.shutdown
+node.wait_for_shutdown
+node.commit(image_name)

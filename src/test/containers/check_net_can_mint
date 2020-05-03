@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../boot', __FILE__)
+
+genesis_time = Time.at(1434279999)
+
+seed_start_time = genesis_time + 60
+start_time = seed_start_time + 5 * 60
+start_time_shift = (start_time - Time.now).to_i
+
+node_names = %w( a b c d e )
+nodes = []
+node_names.each do |name|
+  puts "Starting node #{name}"
+  nodes << CoinContainer.new(
+    image: "bcenet/#{name}",
+    links: nodes.map(&:name),
+    args: {
+      stakegen: true,
+      timetravel: start_time_shift,
+    },
+  )
+end
+
+puts "Waiting for all nodes to boot"
+nodes.each(&:wait_for_boot)
+
+puts "Moving 5 days forward"
+nodes.each do |node|
+    node.rpc "timetravel", 5*24*3600
+end
+
+loop do
+    puts "Node block heights: #{nodes.map(&:block_count).inspect}"
+    sleep 1
+end
+

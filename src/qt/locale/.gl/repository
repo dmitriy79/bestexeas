@@ -1,0 +1,42 @@
+[config]
+project = nubits
+
+[master_files]
+bitcoin_en.ts = 0
+
+[locale_map]
+bitcoin_en.ts/cs = bitcoin_cs.ts
+bitcoin_en.ts/da = bitcoin_da.ts
+bitcoin_en.ts/de = bitcoin_de.ts
+bitcoin_en.ts/es = bitcoin_es.ts
+bitcoin_en.ts/et = bitcoin_et.ts
+bitcoin_en.ts/ca_ES = bitcoin_ca_ES.ts
+bitcoin_en.ts/en = bitcoin_en.ts
+bitcoin_en.ts/es_CL = bitcoin_es_CL.ts
+bitcoin_en.ts/eu_ES = bitcoin_eu_ES.ts
+bitcoin_en.ts/fa = bitcoin_fa.ts
+bitcoin_en.ts/fa_IR = bitcoin_fa_IR.ts
+bitcoin_en.ts/fi = bitcoin_fi.ts
+bitcoin_en.ts/fr_CA = bitcoin_fr_CA.ts
+bitcoin_en.ts/fr_FR = bitcoin_fr_FR.ts
+bitcoin_en.ts/he = bitcoin_he.ts
+bitcoin_en.ts/hr = bitcoin_hr.ts
+bitcoin_en.ts/hu = bitcoin_hu.ts
+bitcoin_en.ts/it = bitcoin_it.ts
+bitcoin_en.ts/lt = bitcoin_lt.ts
+bitcoin_en.ts/nb = bitcoin_nb.ts
+bitcoin_en.ts/nl = bitcoin_nl.ts
+bitcoin_en.ts/pl = bitcoin_pl.ts
+bitcoin_en.ts/pt_BR = bitcoin_pt_BR.ts
+bitcoin_en.ts/ro_RO = bitcoin_ro_RO.ts
+bitcoin_en.ts/ru = bitcoin_ru.ts
+bitcoin_en.ts/sk = bitcoin_sk.ts
+bitcoin_en.ts/sr = bitcoin_sr.ts
+bitcoin_en.ts/sv = bitcoin_sv.ts
+bitcoin_en.ts/tr = bitcoin_tr.ts
+bitcoin_en.ts/uk = bitcoin_uk.ts
+bitcoin_en.ts/zh_CN = bitcoin_zh_CN.ts
+bitcoin_en.ts/zh_TW = bitcoin_zh_TW.ts
+
+[status]
+

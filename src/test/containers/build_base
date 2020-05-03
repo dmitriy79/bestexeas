@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+cd $(dirname $0)
+docker build -t bcexchange/base base/
+docker build -t bcexchange/devel base_devel/
+docker build -t bcexchange/data_feed data_feed
+docker build -t bcexchange/proxy proxy

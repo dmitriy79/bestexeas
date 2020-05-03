@@ -1,0 +1,114 @@
+/* Compiled Styleguide for B&C Exchange GUI client */
+QMainWindow {
+  background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #f9f9ff, stop:0.5 #f8f8f8, stop:1 #f9f9ff); }
+
+QToolBar {
+  background-color: #211f20;
+  height: 125px;
+  border-bottom: 3px solid #ef3614; }
+
+QToolBar > QToolButton {
+  border: 0px;
+  background-color: #211f20;
+  color: white;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 3px;
+  margin-right: 3px;
+  height: 15px;
+  font-weight: 600;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px; }
+
+QToolBar > QToolButton:checked {
+  border-bottom: 2px solid #ef3614;
+  color: white;
+  margin-top: 17px;
+  margin-bottom: 15px;
+  height: 15px;
+  font-weight: 600;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px; }
+
+QToolBar > QToolButton:checked:hover {
+  background-color: #322f30; }
+
+QToolBar > QToolButton:hover {
+  background-color: #322f30; }
+
+QMenuBar::item {
+  spacing: 3px;
+  padding: 1px 3px;
+  border-radius: 4px; }
+
+QGroupBox {
+  background: transparent;
+  color: black; }
+
+QTableView {
+  selection-background-color: #c2efff;
+  selection-color: black; }
+
+QPushButton {
+  background-color: #0074a0;
+  border: 1px solid #006287;
+  border-radius: 3px;
+  font-weight: 600;
+  color: white;
+  padding: 4px; }
+
+QPushButton:hover {
+  background-color: #004f6d; }
+
+QPushButton:disabled {
+  background-color: #dddddd;
+  color: #9f9f9f;
+  border: 1px solid #9f9f9f; }
+
+QLabel {
+  background-color: transparent; }
+
+QCheckBox {
+  background-color: transparent; }
+
+QDialog {
+  background-color: #f8f8f8; }
+
+QDoubleSpinBox {
+  background-color: white; }
+
+QLineEdit {
+  background-color: white; }
+
+QMessageBox {
+  background-color: #f8f8f8; }
+
+QSizeGrip {
+  background-color: #211f20; }
+
+QStatusBar {
+  color: white;
+  background-color: #211f20; }
+
+QTimeEdit {
+  background-color: #f8f8f8; }
+
+QToolButton {
+  background-color: #0074a0;
+  border: 1px solid #006287; }
+
+QToolButton:hover {
+  background-color: #004f6d; }
+
+QToolButton:disabled {
+  background-color: #dddddd;
+  border: 1px solid #9f9f9f; }
+
+QToolTip {
+  background-color: #f8f8f8;
+  color: block;
+  border: 0px; }

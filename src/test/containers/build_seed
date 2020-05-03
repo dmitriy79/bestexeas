@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../boot', __FILE__)
+
+genesis_time = Time.at(1434279999)
+
+start_time = genesis_time + 60
+start_time_shift = (start_time - Time.now).to_i
+
+puts "Creating seed"
+seed = CoinContainer.new(
+  image: 'bcexchange/base',
+  bind_code: true,
+  args: {
+    gen: true,
+    splitshareoutputs: 100,
+    timetravel: start_time_shift,
+  },
+#  delete_at_exit: true,
+)
+
+puts "Creating node"
+node = CoinContainer.new(
+  image: 'bcexchange/base',
+  bind_code: true,
+  links: [seed],
+  remove_wallet_after_shutdown: true,
+  delete_at_exit: true,
+  args: {
+    timetravel: start_time_shift,
+  }
+)
+
+puts "Waiting for node to boot"
+node.wait_for_boot
+
+max = 400
+puts "Waiting for #{max} blocks"
+loop do
+  count = node.rpc("getblockcount")
+  if count.to_i > 0
+    print "\r%3d/%3d" % [count, max]
+    STDOUT.flush
+  end
+  if count.to_i >= max
+    puts
+    break
+  end
+  sleep 1
+end
+
+puts "Building images bcexchange/seed and bcexchange/node"
+seed.shutdown
+node.shutdown
+seed.wait_for_shutdown
+node.wait_for_shutdown
+seed.commit('bcexchange/seed')
+node.commit('bcexchange/node')

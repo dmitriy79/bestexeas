@@ -1,0 +1,36 @@
+# Attribution
+
+// todo: Add new attributions for any CC or FOSS assets used
+// format to use:
+// 
+// {Type (e.g. Icon, Code, Image, etc.)}: {path/to/asset}
+// Source: {If applicable}
+// Designer: {Name}
+// License: {Type (e.g. MIT, LGPL, etc.) or actual text if short}
+// URL: {If applicable}
+// 
+// example:
+// 
+// Icon: src/qt/res/icons/clock*.png, src/qt/res/icons/tx*.png,
+//       src/qt/res/src/*.svg
+// Designer: Wladimir van der Laan
+// License: MIT
+// 
+// or
+// 
+// Icon: src/qt/res/icons/connect*.png
+// Icon Pack: Human-O2
+// Designer: schollidesign
+// License: GNU/GPL
+// Site: http://findicons.com/icon/93743/blocks_gnome_netstatus_0
+// 
+
+## Code
+
+Code: src/strlcpy.h
+Author: Todd C. Miller <Todd.Miller@courtesan.com>
+License: ISC
+
+## Icons
+
+## Images

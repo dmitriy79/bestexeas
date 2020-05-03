@@ -1,0 +1,65 @@
+/* Compiled Styleguide for B&C Exchange GUI client */
+QMain {
+  color: orange;
+  background-color: orange; }
+
+QMainWindow {
+  background-color: white; }
+
+QToolBar {
+  background-color: blue; }
+
+QGroupBox {
+  background-color: purple; }
+
+QTableWidget {
+  background-color: yellow; }
+
+QPushButton {
+  background-color: green; }
+
+QLabel {
+  background-color: lightblue; }
+
+QCheckBox {
+  background-color: lime; }
+
+QDialog {
+  background-color: teal; }
+
+QDoubleSpinBox {
+  background-color: magenta; }
+
+QLineEdit {
+  background-color: navy; }
+
+QMessageBox {
+  background-color: cyan; }
+
+QScrollBar {
+  background-color: maroon;
+  color: white; }
+
+QSizeGrip {
+  background-color: hotpink; }
+
+QStatusBar {
+  background-color: greenyellow; }
+
+QTabBar {
+  background-color: blueviolet; }
+
+QTimeEdit {
+  background-color: darkorange; }
+
+QToolButton {
+  background-color: mediumaquamarine; }
+
+QToolTip {
+  background-color: yellow; }
+
+QToolBox::tab {
+  background-color: gold; }
+
+QCheckBox {
+  color: red; }

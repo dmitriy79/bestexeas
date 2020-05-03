@@ -1,0 +1,11 @@
+#!/bin/bash
+
+BRANCH=$1
+
+if [ -z "$BRANCH" ]; then
+  echo "usage: $0 <branch>"
+  echo "Displays the tree of commits in <branch> that have not been merged into HEAD"
+  exit 1
+fi
+
+exec git rev-list HEAD..$BRANCH --left-right --cherry-pick --oneline --graph
